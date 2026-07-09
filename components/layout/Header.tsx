@@ -8,11 +8,10 @@ import { Logo } from "./Logo";
 
 export function Header() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false); // モバイル
-  const [active, setActive] = useState<string | null>(null); // メガメニュー
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
 
-  // ルート変更で閉じる
   const [prevPath, setPrevPath] = useState(pathname);
   if (prevPath !== pathname) {
     setPrevPath(pathname);
@@ -34,10 +33,9 @@ export function Header() {
 
   return (
     <>
-      {/* トップユーティリティバー（SNS・言語切り替え・スクロールで流れる）: 背景は白 */}
+      {/* トップユーティリティバー */}
       <div className="bg-white">
         <div className="relative mx-auto flex h-9 max-w-[90rem] items-center justify-end gap-4 px-5 sm:px-8 lg:px-10">
-          {/* 中央の言葉（Rust のコンソール出力コード / VS Code 風配色） */}
           <div className="pointer-events-none absolute left-1/2 hidden -translate-x-1/2 md:block">
             <code className="whitespace-nowrap font-mono text-[0.85rem] font-bold">
               <span className="text-[#bf8700]">println!</span>
@@ -47,7 +45,6 @@ export function Header() {
             </code>
           </div>
 
-          {/* SNS */}
           <div className="flex items-center gap-3 text-muted">
             <a href="#" aria-label="X (Twitter)" className="transition-colors hover:text-ink">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -80,38 +77,32 @@ export function Header() {
 
           <span aria-hidden className="h-4 w-px bg-line" />
 
-          {/* 言語切り替え */}
           <div className="flex items-center gap-1.5 text-[0.75rem]">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden className="text-muted">
               <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
               <path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" stroke="currentColor" strokeWidth="1.5" />
             </svg>
-            <button type="button" className="font-medium text-ink" aria-current="true">
-              日本語
-            </button>
+            <button type="button" className="font-medium text-ink" aria-current="true">日本語</button>
             <span aria-hidden className="text-line-strong">/</span>
-            <button type="button" className="text-muted transition-colors hover:text-ink">
-              English
-            </button>
+            <button type="button" className="text-muted transition-colors hover:text-ink">English</button>
           </div>
         </div>
       </div>
 
-      {/* 下段：メインヘッダー（ここだけ画面固定） */}
+      {/* メインヘッダー */}
       <header
         onMouseLeave={() => setActive(null)}
         className={`sticky top-0 z-50 border-b-2 border-line bg-[#FAFAFA] transition-shadow duration-300 ${
           scrolled || active ? "shadow-[0_1px_0_rgba(0,0,0,0)]" : ""
         }`}
       >
-      <div className="mx-auto flex h-14 max-w-[90rem] items-center justify-between px-5 sm:px-8 lg:px-10">
-        <Logo />
+        <div className="mx-auto flex h-14 max-w-[90rem] items-center justify-between px-5 sm:px-8 lg:px-10">
+          <Logo />
 
-        {/* デスクトップナビ */}
-        <nav aria-label="グローバルナビゲーション" className="hidden h-full lg:block">
-          <ul className="flex h-full items-stretch">
-            {MEGA_MENU.map((item) => {
-              return (
+          {/* デスクトップナビ */}
+          <nav aria-label="グローバルナビゲーション" className="hidden h-full lg:block">
+            <ul className="flex h-full items-stretch">
+              {MEGA_MENU.map((item) => (
                 <li
                   key={item.href}
                   className="flex items-stretch"
@@ -119,151 +110,135 @@ export function Header() {
                 >
                   <Link
                     href={item.href}
-                    className="group flex items-center gap-1.5 px-4 text-[0.92rem] font-normal tracking-wide text-[#323232] transition-colors hover:text-primary xl:px-5"
+                    className="flex items-center gap-1.5 px-4 text-[0.92rem] font-normal tracking-wide text-[#323232] transition-colors hover:text-primary xl:px-5"
                     onFocus={() => setActive(item.href)}
                   >
                     {item.label}
                     <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 10 10"
-                      fill="none"
+                      width="14" height="14" viewBox="0 0 10 10" fill="none"
                       aria-hidden="true"
-                      className={`transition-transform duration-300 ${
-                        active === item.href ? "rotate-180" : ""
-                      }`}
+                      className={`transition-transform duration-300 ${active === item.href ? "rotate-180" : ""}`}
                     >
-                      <path
-                        d="M2 3.5L5 6.5L8 3.5"
-                        stroke="currentColor"
-                        strokeWidth="1.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
+                      <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </Link>
                 </li>
-              );
-            })}
-          </ul>
-        </nav>
+              ))}
+            </ul>
+          </nav>
 
-        <div className="flex items-center gap-2">
-          <Link
-            href="/contact"
-            className="hidden h-11 items-center gap-2 text-[0.92rem] font-normal tracking-wide text-[#323232] transition-colors hover:text-primary lg:inline-flex"
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 20 20"
-              fill="none"
-              aria-hidden="true"
+          <div className="flex items-center gap-2">
+            <Link
+              href="/contact"
+              className="hidden h-11 items-center gap-2 text-[0.92rem] font-normal tracking-wide text-[#323232] transition-colors hover:text-primary lg:inline-flex"
             >
-              <rect
-                x="2"
-                y="4"
-                width="16"
-                height="12"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              />
-              <path
-                d="M2.5 5l7.5 5.5L17.5 5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              />
-            </svg>
-            お問い合わせ
-          </Link>
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? "メニューを閉じる" : "メニューを開く"}
-            className="inline-flex h-11 w-11 items-center justify-center text-ink lg:hidden"
-          >
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              {open ? (
-                <path d="M5 5l12 12M17 5L5 17" stroke="currentColor" strokeWidth="1.5" />
-              ) : (
-                <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" strokeWidth="1.5" />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* メガメニュー・パネル */}
-      {activeItem?.children && (
-        <div className="absolute inset-x-0 top-full hidden border-b border-line bg-[#FAFAFA] shadow-[0_24px_40px_-24px_rgba(13,14,18,0.22)] lg:block">
-          <div className="mx-auto max-w-[90rem] px-10 py-10">
-            <div className="grid grid-cols-[minmax(0,16rem)_1fr] gap-12">
-              <div className="pr-10">
-                <p className="text-[0.7rem] font-normal uppercase tracking-[0.2em] text-muted">
-                  {activeItem.label}
-                </p>
-                <p className="mt-4 text-[1.35rem] font-normal leading-snug tracking-tight text-ink">
-                  {activeItem.lead}
-                </p>
-                <Link
-                  href={activeItem.href}
-                  className="group mt-6 inline-flex items-center gap-2 text-sm font-normal text-ink"
-                >
-                  <span className="inline-block">一覧を見る</span>
-                  <span aria-hidden className="text-muted transition-transform duration-300 group-hover:translate-x-1">
-                    ›
-                  </span>
-                </Link>
-              </div>
-              <ul className="grid grid-cols-2 gap-x-8 gap-y-1">
-                {activeItem.children.map((c) => (
-                  <li key={c.href}>
-                    <Link href={c.href} className="group block py-3">
-                      <span className="block text-[0.95rem] font-normal text-ink transition-colors group-hover:text-primary">
-                        {c.label}
-                      </span>
-                      {c.desc && (
-                        <span className="mt-0.5 block text-[0.8rem] text-muted">
-                          {c.desc}
-                        </span>
-                      )}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <rect x="2" y="4" width="16" height="12" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M2.5 5l7.5 5.5L17.5 5" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+              お問い合わせ
+            </Link>
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? "メニューを閉じる" : "メニューを開く"}
+              className="inline-flex h-11 w-11 items-center justify-center text-ink lg:hidden"
+            >
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                {open ? (
+                  <path d="M5 5l12 12M17 5L5 17" stroke="currentColor" strokeWidth="1.5" />
+                ) : (
+                  <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" strokeWidth="1.5" />
+                )}
+              </svg>
+            </button>
           </div>
         </div>
-      )}
 
-      {/* モバイルメニュー */}
-      {open && (
-        <nav
-          id="mobile-menu"
-          aria-label="モバイルナビゲーション"
-          className="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-line bg-[#FAFAFA] lg:hidden"
-        >
-          <ul className="px-5 py-2 sm:px-8">
-            {NAV.map((item) => (
-              <li key={item.href}>
+        {/* メガメニュー・パネル */}
+        {activeItem?.children && (
+          <div className="absolute inset-x-0 top-full hidden border-t-2 border-b border-line bg-white shadow-[0_24px_40px_-24px_rgba(13,14,18,0.22)] lg:block">
+            <div className="mx-auto flex max-w-[90rem]">
+              {/* 左：グレーパネル（左画面端まで伸ばす） */}
+              <div className="relative w-56 shrink-0 bg-[#FAFAFA] px-8 py-10 xl:w-64">
+                {/* 左端まで塗りつぶす */}
+                <div aria-hidden className="absolute inset-y-0 right-full w-[50vw] bg-[#FAFAFA]" />
+                <div className="relative">
+                  <p className="relative pl-3.5 text-[1.05rem] font-semibold leading-tight text-[#323232]">
+                    <span aria-hidden className="absolute left-0 inset-y-[3px] w-[5px] bg-primary" />
+                    {activeItem.label}
+                  </p>
+                  <p className="mt-3 text-[0.9rem] leading-6 text-[#323232]">
+                    {activeItem.lead}
+                  </p>
+                </div>
+              </div>
+
+              {/* 右：リンク一覧 */}
+              <div className="flex-1 px-10 py-8">
+                {/* カテゴリ見出しリンク */}
                 <Link
-                  href={item.href}
-                  className={`flex items-center justify-between border-b border-line/70 py-4 text-[0.95rem] font-normal ${
-                    isActive(item.href) ? "text-primary" : "text-[#323232]"
-                  }`}
+                  href={activeItem.href}
+                  className="group mb-5 inline-flex items-center gap-1.5 border-b border-line pb-4"
                 >
-                  {item.label}
-                  <span aria-hidden className="text-faint">
-                    ›
+                  <span className="text-[1rem] font-semibold text-[#323232] transition-colors group-hover:text-primary">
+                    {activeItem.label}
                   </span>
+                  <span aria-hidden className="text-[#323232] transition-colors group-hover:text-primary">→</span>
                 </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
+
+                {/* 子項目グリッド */}
+                <ul className="grid grid-cols-2 xl:grid-cols-3">
+                  {activeItem.children.map((c) => (
+                    <li key={c.href}>
+                      <Link
+                        href={c.href}
+                        className="group flex w-full items-center justify-between py-4 pr-3 transition-colors hover:text-primary"
+                      >
+                        <span className="text-[0.9rem] font-normal text-[#323232] transition-colors group-hover:text-primary">
+                          {c.label}
+                        </span>
+                        <svg
+                          width="8" height="14" viewBox="0 0 8 14" fill="none"
+                          aria-hidden className="ml-2 shrink-0 text-[#323232] transition-colors group-hover:text-primary"
+                        >
+                          <path d="M1 1l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* モバイルメニュー */}
+        {open && (
+          <nav
+            id="mobile-menu"
+            aria-label="モバイルナビゲーション"
+            className="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-line bg-[#FAFAFA] lg:hidden"
+          >
+            <ul className="px-5 py-2 sm:px-8">
+              {NAV.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={`flex items-center justify-between border-b border-line/70 py-4 text-[0.95rem] font-normal ${
+                      isActive(item.href) ? "text-primary" : "text-[#323232]"
+                    }`}
+                  >
+                    {item.label}
+                    <span aria-hidden className="text-[1.15rem] leading-none text-faint">›</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </header>
     </>
   );

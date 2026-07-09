@@ -1,17 +1,12 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/ui/PageHeader";
-import { Section } from "@/components/ui/Section";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { Container } from "@/components/ui/Container";
 import { Placeholder } from "@/components/ui/Placeholder";
 import { JsonLd } from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
-import {
-  SITE,
-  COMPANY_PROFILE,
-  PHILOSOPHY,
-  HISTORY,
-  CEO_MESSAGE,
-} from "@/lib/site";
+import { IMG } from "@/lib/images";
+import { SITE, COMPANY_PROFILE, PHILOSOPHY, HISTORY, CEO_MESSAGE } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "企業情報",
@@ -31,114 +26,178 @@ export default function CompanyPage() {
           url: `${SITE.url}/company`,
         }}
       />
-      <PageHeader
-        eyebrow="Company"
-        title="企業情報"
-        description="技術で、社会の基盤をつくる。私たちの理念と歩みをご紹介します。"
-        crumbs={[{ label: "企業情報", href: "/company" }]}
-      />
 
-      {/* 会社概要 */}
-      <Section background="surface" id="profile">
-        <SectionHeading eyebrow="Profile" title="会社概要" />
-        <dl className="mt-12 divide-y divide-line border-y border-line">
-          {COMPANY_PROFILE.map((row) => (
-            <div
-              key={row.label}
-              className="grid gap-2 py-6 sm:grid-cols-[200px_1fr] sm:gap-8"
-            >
-              <dt className="text-sm font-normal text-ink">{row.label}</dt>
-              <dd className="text-sm leading-7 text-muted">{row.value}</dd>
-            </div>
-          ))}
-        </dl>
-      </Section>
-
-      {/* 代表メッセージ */}
-      <Section background="muted" id="message">
-        <SectionHeading eyebrow="Message" title="代表メッセージ" />
-        <div className="mt-12 grid gap-12 lg:grid-cols-[320px_1fr] lg:gap-16">
-          <div>
-            <Placeholder ratio="3/2" />
-            <p className="mt-4 text-sm font-normal text-ink">
-              {CEO_MESSAGE.name}
+      {/* ─── HERO ─── */}
+      <section className="bg-[#DCDCDC]">
+        <Container className="pb-0 pt-10 sm:pt-12">
+          <Breadcrumbs items={[{ label: "企業情報", href: "/company" }]} />
+          <div className="mt-10 sm:mt-14">
+            <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-ink/40">
+              Company
+            </p>
+            <h1 className="mt-3 text-[3rem] font-medium leading-[1.05] tracking-[-0.03em] text-ink sm:text-[4.5rem] lg:text-[5.5rem]">
+              企業情報
+            </h1>
+            <p className="mt-6 max-w-xl text-[1rem] leading-8 text-ink/60">
+              技術で、社会の基盤をつくる。私たちの理念と歩みをご紹介します。
             </p>
           </div>
-          <div className="space-y-6">
-            {CEO_MESSAGE.paragraphs.map((p, i) => (
-              <p key={i} className="text-base leading-8 text-ink/80">
-                {p}
-              </p>
+          <div className="mt-12 overflow-hidden">
+            <img
+              src={IMG.heroCompany}
+              alt=""
+              className="h-[30vw] min-h-[200px] max-h-[400px] w-full object-cover object-center"
+            />
+          </div>
+        </Container>
+      </section>
+
+      {/* ─── 会社概要 ─── */}
+      <section id="profile" className="bg-surface py-24 sm:py-28">
+        <Container>
+          <div className="flex items-baseline justify-between gap-4 border-b border-line pb-8">
+            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-ink sm:text-[2.35rem]">
+              会社概要
+            </h2>
+            <span className="shrink-0 text-[0.68rem] font-normal uppercase tracking-[0.26em] text-muted">
+              Profile
+            </span>
+          </div>
+          <dl className="divide-y divide-line">
+            {COMPANY_PROFILE.map((row) => (
+              <div
+                key={row.label}
+                className="grid gap-3 py-6 sm:grid-cols-[200px_1fr] sm:gap-10"
+              >
+                <dt className="text-[0.73rem] font-normal uppercase tracking-[0.14em] text-muted">
+                  {row.label}
+                </dt>
+                <dd className="text-[0.95rem] leading-7 text-ink/80">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </Container>
+      </section>
+
+      {/* ─── 代表メッセージ ─── */}
+      <section id="message" className="bg-ink py-24 text-white sm:py-28">
+        <Container>
+          <div className="grid gap-14 lg:grid-cols-[360px_1fr] lg:gap-20">
+            <div>
+              <Placeholder ratio="3/2" tone="dark" />
+              <div className="mt-5 border-l border-white/20 pl-5">
+                <p className="text-[0.68rem] font-normal uppercase tracking-[0.22em] text-white/40">
+                  Message from CEO
+                </p>
+                <p className="mt-1 text-sm text-white/55">{CEO_MESSAGE.name}</p>
+              </div>
+            </div>
+            <div>
+              <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-white sm:text-[2.35rem]">
+                代表メッセージ
+              </h2>
+              <div aria-hidden className="my-8 h-px w-10 bg-primary" />
+              <div className="space-y-7">
+                {CEO_MESSAGE.paragraphs.map((p, i) => (
+                  <p key={i} className="text-[0.97rem] leading-9 text-white/70">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ─── Mission / Vision ─── */}
+      <section id="philosophy" className="bg-background py-24 sm:py-28">
+        <Container>
+          <div className="grid gap-4 lg:grid-cols-2">
+            {[PHILOSOPHY.mission, PHILOSOPHY.vision].map((item) => (
+              <div
+                key={item.title}
+                className="relative overflow-hidden bg-surface p-10 sm:p-14"
+              >
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent"
+                />
+                <div className="relative">
+                  <p className="text-[0.68rem] font-normal uppercase tracking-[0.26em] text-primary">
+                    {item.title}
+                  </p>
+                  <h3 className="mt-5 text-[1.65rem] font-medium leading-tight tracking-[-0.02em] text-ink sm:text-[2rem]">
+                    {item.heading}
+                  </h3>
+                  <div aria-hidden className="my-6 h-px w-10 bg-primary" />
+                  <p className="text-[0.95rem] leading-8 text-muted">{item.body}</p>
+                </div>
+              </div>
             ))}
           </div>
-        </div>
-      </Section>
+        </Container>
+      </section>
 
-      {/* Mission / Vision */}
-      <Section background="surface" id="philosophy">
-        <div className="grid gap-12 lg:grid-cols-2">
-          <div className="border-l-2 border-primary bg-background p-8 sm:p-10">
-            <p className="text-sm font-normal uppercase tracking-[0.2em] text-muted">
-              {PHILOSOPHY.mission.title}
-            </p>
-            <h3 className="mt-4 text-2xl font-medium text-ink">
-              {PHILOSOPHY.mission.heading}
-            </h3>
-            <p className="mt-4 text-base leading-8 text-muted">
-              {PHILOSOPHY.mission.body}
-            </p>
+      {/* ─── Value ─── */}
+      <section id="value" className="bg-[#DCDCDC] py-24 sm:py-28">
+        <Container>
+          <div className="flex items-baseline justify-between gap-4 border-b border-ink/15 pb-8">
+            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-ink sm:text-[2.35rem]">
+              私たちの価値観
+            </h2>
+            <span className="shrink-0 text-[0.68rem] font-normal uppercase tracking-[0.26em] text-ink/35">
+              Value
+            </span>
           </div>
-          <div className="border-l-2 border-primary bg-background p-8 sm:p-10">
-            <p className="text-sm font-normal uppercase tracking-[0.2em] text-muted">
-              {PHILOSOPHY.vision.title}
-            </p>
-            <h3 className="mt-4 text-2xl font-medium text-ink">
-              {PHILOSOPHY.vision.heading}
-            </h3>
-            <p className="mt-4 text-base leading-8 text-muted">
-              {PHILOSOPHY.vision.body}
-            </p>
+          <div className="mt-6 grid gap-px sm:grid-cols-2">
+            {PHILOSOPHY.value.items.map((item, i) => (
+              <div
+                key={item.title}
+                className="relative overflow-hidden bg-surface/90 p-10 sm:p-12"
+              >
+                <p
+                  aria-hidden
+                  className="pointer-events-none absolute right-6 top-4 font-mono text-[5rem] font-medium leading-none text-ink/5 sm:text-[6rem]"
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <div className="relative">
+                  <div aria-hidden className="mb-5 h-px w-8 bg-primary" />
+                  <h4 className="text-[1.05rem] font-medium text-ink">{item.title}</h4>
+                  <p className="mt-4 text-sm leading-7 text-muted">{item.body}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-      </Section>
+        </Container>
+      </section>
 
-      {/* Value */}
-      <Section background="muted" id="value">
-        <SectionHeading
-          eyebrow={PHILOSOPHY.value.title}
-          title="私たちの価値観"
-          description="日々の意思決定と行動の指針となる 4 つの価値観です。"
-        />
-        <div className="mt-12 grid gap-6 sm:grid-cols-2">
-          {PHILOSOPHY.value.items.map((item) => (
-            <div
-              key={item.title}
-              className="border border-line bg-surface p-8"
-            >
-              <h4 className="text-lg font-normal text-ink">{item.title}</h4>
-              <p className="mt-3 text-sm leading-7 text-muted">{item.body}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* 沿革 */}
-      <Section background="surface" id="history">
-        <SectionHeading eyebrow="History" title="沿革" />
-        <ol className="mt-12 space-y-0 border-l border-line">
-          {HISTORY.map((h, i) => (
-            <li key={i} className="relative pb-10 pl-8 last:pb-0">
-              <span className="absolute -left-[7px] top-1.5 h-3.5 w-3.5 rounded-full border-2 border-primary bg-surface" />
-              <div className="flex flex-col gap-1 sm:flex-row sm:gap-6">
-                <span className="font-mono text-sm font-normal text-ink">
+      {/* ─── 沿革 ─── */}
+      <section id="history" className="bg-ink py-24 text-white sm:py-28">
+        <Container>
+          <div className="flex items-baseline justify-between gap-4 border-b border-white/15 pb-8">
+            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-white sm:text-[2.35rem]">
+              沿革
+            </h2>
+            <span className="shrink-0 text-[0.68rem] font-normal uppercase tracking-[0.26em] text-white/25">
+              History
+            </span>
+          </div>
+          <ol className="mt-2">
+            {HISTORY.map((h, i) => (
+              <li
+                key={i}
+                className="grid grid-cols-[80px_1fr] gap-6 border-b border-white/10 py-7 last:border-0 sm:grid-cols-[120px_1fr] sm:gap-12"
+              >
+                <span className="pt-0.5 font-mono text-sm font-normal text-white/35">
                   {h.year}
                 </span>
-                <span className="text-base leading-7 text-ink/80">{h.text}</span>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </Section>
+                <span className="text-[0.97rem] leading-7 text-white/75">{h.text}</span>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </section>
     </>
   );
 }

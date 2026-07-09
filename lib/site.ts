@@ -69,7 +69,7 @@ export const MEGA_MENU: MegaItem[] = [
   {
     label: "企業情報",
     href: "/company",
-    lead: "私たちの理念と歩み。",
+    lead: "技術で社会の基盤をつくる。私たちのミッション・ビジョン・沿革をご紹介します。",
     children: [
       { label: "会社概要", href: "/company#profile", desc: "会社名・所在地・事業内容" },
       { label: "代表メッセージ", href: "/company#message", desc: "経営トップからのご挨拶" },
@@ -80,7 +80,7 @@ export const MEGA_MENU: MegaItem[] = [
   {
     label: "事業内容",
     href: "/business",
-    lead: "事業を支える 4 つの基盤領域。",
+    lead: "MCP ホスティング・WebAssembly・セキュリティ・パフォーマンスの 4 領域で事業基盤を支えます。",
     children: [
       { label: "NodeFlare", href: "/business/nodeflare", desc: "MCP Hosting Platform" },
       { label: "WebAssembly開発", href: "/business/webassembly", desc: "高速な WebAssembly ソリューション" },
@@ -91,7 +91,7 @@ export const MEGA_MENU: MegaItem[] = [
   {
     label: "プロダクト",
     href: "/products",
-    lead: "自社開発のプロダクト。",
+    lead: "AI エージェント時代のバックエンドを支える、MCP ホスティングプラットフォーム。",
     children: [
       { label: "NodeFlare", href: "/products/nodeflare", desc: "MCP ホスティングプラットフォーム" },
     ],
@@ -99,7 +99,7 @@ export const MEGA_MENU: MegaItem[] = [
   {
     label: "技術",
     href: "/technology",
-    lead: "保有・活用する技術。",
+    lead: "Rust・Go・WebAssembly・Cloudflare など、信頼性とパフォーマンスを両立する技術スタック。",
     children: [
       { label: "技術一覧", href: "/technology", desc: "Cloudflare / WebAssembly / Rust / Go ほか" },
     ],
@@ -107,7 +107,7 @@ export const MEGA_MENU: MegaItem[] = [
   {
     label: "お知らせ",
     href: "/news",
-    lead: "最新情報・技術トピック。",
+    lead: "プレスリリースや技術トピックなど、NodeFlare からの最新情報をお届けします。",
     children: [
       { label: "すべてのお知らせ", href: "/news", desc: "プレスリリース・更新情報" },
       { label: "WebAssembly", href: "/news/webassembly", desc: "WebAssembly 関連トピック" },
@@ -118,7 +118,7 @@ export const MEGA_MENU: MegaItem[] = [
   {
     label: "採用情報",
     href: "/recruit",
-    lead: "基盤領域の仲間を探しています。",
+    lead: "基盤領域の難しさに面白さを見いだせるエンジニアを募集しています。",
     children: [
       { label: "募集職種", href: "/recruit#positions", desc: "現在募集中のポジション" },
       { label: "働く環境", href: "/recruit#environment", desc: "文化と働き方" },
