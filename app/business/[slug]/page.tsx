@@ -74,7 +74,7 @@ export default async function BusinessDetailPage({
               {business.description}
             </p>
           </div>
-          <Placeholder label={`${business.title}`} ratio="4/3" tone="dark" />
+          <Placeholder ratio="4/3" tone="dark" />
         </div>
       </Section>
 

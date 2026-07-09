@@ -147,7 +147,7 @@ export default async function ArticlePage({
 
         {/* 本文 */}
         <Container size="narrow" className="py-14 sm:py-16">
-          <Placeholder label="記事のカバー画像スペース" ratio="16/9" className="mb-12" />
+          <Placeholder ratio="16/9" className="mb-12" />
           {post.contentHtml ? (
             <div
               className="prose max-w-none text-base leading-8 text-ink/85"

@@ -29,7 +29,7 @@ export default function ProductsPage() {
         >
           <div className="overflow-hidden">
             <div className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]">
-              <Placeholder label="NodeFlare product image" ratio="4/3" tone="dark" />
+              <Placeholder ratio="4/3" tone="dark" />
             </div>
           </div>
           <div>

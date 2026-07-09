@@ -59,7 +59,7 @@ export default function CompanyPage() {
         <SectionHeading eyebrow="Message" title="代表メッセージ" />
         <div className="mt-12 grid gap-12 lg:grid-cols-[320px_1fr] lg:gap-16">
           <div>
-            <Placeholder label="代表写真スペース" ratio="3/2" />
+            <Placeholder ratio="3/2" />
             <p className="mt-4 text-sm font-normal text-ink">
               {CEO_MESSAGE.name}
             </p>

@@ -83,7 +83,7 @@ export default function NodeFlareProductPage() {
               </Button>
             </div>
           </div>
-          <Placeholder label="NodeFlare 製品イメージ" ratio="4/3" />
+          <Placeholder ratio="4/3" />
         </div>
       </Section>
 

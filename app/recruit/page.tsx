@@ -65,7 +65,7 @@ export default function RecruitPage() {
               description={RECRUIT.environment.body}
             />
           </div>
-          <Placeholder label="働く環境の写真スペース" ratio="4/3" />
+          <Placeholder ratio="4/3" />
         </div>
       </Section>
 
