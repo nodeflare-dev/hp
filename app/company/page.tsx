@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Container } from "@/components/ui/Container";
 import { Placeholder } from "@/components/ui/Placeholder";
@@ -27,52 +28,33 @@ export default function CompanyPage() {
         }}
       />
 
-      {/* ─── HERO ─── */}
-      <section className="bg-[#DCDCDC]">
-        <Container className="pb-0 pt-10 sm:pt-12">
+      {/* ─── ページタイトル ─── */}
+      <section className="border-b border-line bg-white pb-12 pt-3 sm:pb-16 sm:pt-4">
+        <Container>
           <Breadcrumbs items={[{ label: "企業情報", href: "/company" }]} />
-          <div className="mt-10 sm:mt-14">
-            <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-ink/40">
-              Company
-            </p>
-            <h1 className="mt-3 text-[3rem] font-medium leading-[1.05] tracking-[-0.03em] text-ink sm:text-[4.5rem] lg:text-[5.5rem]">
-              企業情報
-            </h1>
-            <p className="mt-6 max-w-xl text-[1rem] leading-8 text-ink/60">
-              技術で、社会の基盤をつくる。私たちの理念と歩みをご紹介します。
-            </p>
-          </div>
-          <div className="mt-12 overflow-hidden">
-            <img
-              src={IMG.heroCompany}
-              alt=""
-              className="h-[30vw] min-h-[200px] max-h-[400px] w-full object-cover object-center"
-            />
-          </div>
+          <h1 className="mt-6 text-[1.65rem] font-bold tracking-tight text-[#333333] sm:text-[2rem]">
+            企業情報
+          </h1>
+          <p className="mt-3 text-[1.05rem] leading-8 text-[#333333]">
+            技術で、社会の基盤をつくる。私たちの理念と歩みをご紹介します。
+          </p>
         </Container>
       </section>
 
       {/* ─── 会社概要 ─── */}
-      <section id="profile" className="bg-surface py-24 sm:py-28">
+      <section id="profile" className="bg-white py-16 sm:py-20">
         <Container>
-          <div className="flex items-baseline justify-between gap-4 border-b border-line pb-8">
-            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-ink sm:text-[2.35rem]">
-              会社概要
-            </h2>
-            <span className="shrink-0 text-[0.68rem] font-normal uppercase tracking-[0.26em] text-muted">
-              Profile
-            </span>
-          </div>
-          <dl className="divide-y divide-line">
+          <h2 className="mb-8 text-[1.05rem] font-bold text-[#333333]">
+            会社概要
+          </h2>
+          <dl>
             {COMPANY_PROFILE.map((row) => (
               <div
                 key={row.label}
-                className="grid gap-3 py-6 sm:grid-cols-[200px_1fr] sm:gap-10"
+                className="grid border-b border-line py-4 first:border-t sm:grid-cols-[180px_1fr] sm:py-5"
               >
-                <dt className="text-[0.73rem] font-normal uppercase tracking-[0.14em] text-muted">
-                  {row.label}
-                </dt>
-                <dd className="text-[0.95rem] leading-7 text-ink/80">{row.value}</dd>
+                <dt className="mb-1 text-[0.83rem] text-muted sm:mb-0">{row.label}</dt>
+                <dd className="text-[0.93rem] leading-7 text-[#333333]">{row.value}</dd>
               </div>
             ))}
           </dl>
@@ -80,122 +62,115 @@ export default function CompanyPage() {
       </section>
 
       {/* ─── 代表メッセージ ─── */}
-      <section id="message" className="bg-ink py-24 text-white sm:py-28">
+      <section id="message" className="bg-white py-16 sm:py-24">
         <Container>
-          <div className="grid gap-14 lg:grid-cols-[360px_1fr] lg:gap-20">
+          <div className="grid gap-10 lg:grid-cols-[300px_1fr] lg:gap-16">
             <div>
-              <Placeholder ratio="3/2" tone="dark" />
-              <div className="mt-5 border-l border-white/20 pl-5">
-                <p className="text-[0.68rem] font-normal uppercase tracking-[0.22em] text-white/40">
-                  Message from CEO
-                </p>
-                <p className="mt-1 text-sm text-white/55">{CEO_MESSAGE.name}</p>
-              </div>
+              <Placeholder ratio="3/4" tone="light" />
+              <p className="mt-3 text-[0.8rem] text-muted">{CEO_MESSAGE.name}</p>
             </div>
             <div>
-              <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-white sm:text-[2.35rem]">
+              <h2 className="mb-10 text-[1.05rem] font-bold text-ink">
                 代表メッセージ
               </h2>
-              <div aria-hidden className="my-8 h-px w-10 bg-primary" />
-              <div className="space-y-7">
-                {CEO_MESSAGE.paragraphs.map((p, i) => (
-                  <p key={i} className="text-[0.97rem] leading-9 text-white/70">
-                    {p}
-                  </p>
-                ))}
-              </div>
+              {CEO_MESSAGE.paragraphs.map((p, i) => (
+                <p
+                  key={i}
+                  className={`text-[1.05rem] leading-[2.1] text-[#333333]${i > 0 ? " mt-8" : ""}`}
+                >
+                  {p}
+                </p>
+              ))}
             </div>
           </div>
         </Container>
       </section>
 
-      {/* ─── Mission / Vision ─── */}
-      <section id="philosophy" className="bg-background py-24 sm:py-28">
-        <Container>
-          <div className="grid gap-4 lg:grid-cols-2">
-            {[PHILOSOPHY.mission, PHILOSOPHY.vision].map((item) => (
-              <div
-                key={item.title}
-                className="relative overflow-hidden bg-surface p-10 sm:p-14"
-              >
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent"
-                />
-                <div className="relative">
-                  <p className="text-[0.68rem] font-normal uppercase tracking-[0.26em] text-primary">
-                    {item.title}
+      {/* ─── 経営理念 ─── */}
+      <section id="philosophy">
+        {/* 写真コンテナ：relative でカードの絶対配置基準になる */}
+        <div className="relative">
+          <img
+            src={IMG.heroCompany}
+            alt=""
+            className="h-[260px] w-full object-cover object-center sm:h-[360px] lg:h-[420px]"
+          />
+          {/* sm以上: absolute bottom-0 + translate-y-1/2 で写真下端に半身はみ出す */}
+          <div className="sm:absolute sm:inset-x-0 sm:bottom-0 sm:z-10 sm:translate-y-1/2">
+            <Container>
+              <div className="grid rounded-xl border border-ink/25 bg-white divide-y divide-ink/25 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+                {/* Mission */}
+                <Link href="/company/philosophy/mission" className="group flex flex-col p-4 transition-colors hover:bg-surface sm:p-6">
+                  <p className="text-[1.05rem] font-bold text-ink transition-colors group-hover:text-primary">Mission</p>
+                  <p className="mt-3 flex-1 text-[0.92rem] leading-7 text-ink/90">
+                    {PHILOSOPHY.mission.heading}{" "}{PHILOSOPHY.mission.body}
                   </p>
-                  <h3 className="mt-5 text-[1.65rem] font-medium leading-tight tracking-[-0.02em] text-ink sm:text-[2rem]">
-                    {item.heading}
-                  </h3>
-                  <div aria-hidden className="my-6 h-px w-10 bg-primary" />
-                  <p className="text-[0.95rem] leading-8 text-muted">{item.body}</p>
-                </div>
+                  <div className="mt-5 flex justify-end">
+                    <span aria-hidden className="flex h-8 w-8 items-center justify-center rounded-md bg-ink text-white transition-all duration-200 group-hover:bg-primary group-hover:translate-x-0.5">
+                      <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden>
+                        <path d="M1 1l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                  </div>
+                </Link>
+                {/* Vision */}
+                <Link href="/company/philosophy/vision" className="group flex flex-col p-4 transition-colors hover:bg-surface sm:p-6">
+                  <p className="text-[1.05rem] font-bold text-ink transition-colors group-hover:text-primary">Vision</p>
+                  <p className="mt-3 flex-1 text-[0.92rem] leading-7 text-ink/90">
+                    {PHILOSOPHY.vision.heading}{" "}{PHILOSOPHY.vision.body}
+                  </p>
+                  <div className="mt-5 flex justify-end">
+                    <span aria-hidden className="flex h-8 w-8 items-center justify-center rounded-md bg-ink text-white transition-all duration-200 group-hover:bg-primary group-hover:translate-x-0.5">
+                      <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden>
+                        <path d="M1 1l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                  </div>
+                </Link>
+                {/* Value — 2列グリッド */}
+                <Link href="/company/philosophy/value" className="group flex flex-col p-4 transition-colors hover:bg-surface sm:p-6">
+                  <p className="text-[1.05rem] font-bold text-ink transition-colors group-hover:text-primary">Value</p>
+                  <ul className="mt-3 flex-1 grid grid-cols-2 gap-x-4 gap-y-4">
+                    {PHILOSOPHY.value.items.map((item) => (
+                      <li key={item.title}>
+                        <p className="text-[0.82rem] font-semibold text-ink">{item.title}</p>
+                        <p className="mt-0.5 text-[0.82rem] leading-5 text-ink/75">{item.summary}</p>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-5 flex justify-end">
+                    <span aria-hidden className="flex h-8 w-8 items-center justify-center rounded-md bg-ink text-white transition-all duration-200 group-hover:bg-primary group-hover:translate-x-0.5">
+                      <svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden>
+                        <path d="M1 1l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                  </div>
+                </Link>
               </div>
-            ))}
+            </Container>
           </div>
-        </Container>
-      </section>
-
-      {/* ─── Value ─── */}
-      <section id="value" className="bg-[#DCDCDC] py-24 sm:py-28">
-        <Container>
-          <div className="flex items-baseline justify-between gap-4 border-b border-ink/15 pb-8">
-            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-ink sm:text-[2.35rem]">
-              私たちの価値観
-            </h2>
-            <span className="shrink-0 text-[0.68rem] font-normal uppercase tracking-[0.26em] text-ink/35">
-              Value
-            </span>
-          </div>
-          <div className="mt-6 grid gap-px sm:grid-cols-2">
-            {PHILOSOPHY.value.items.map((item, i) => (
-              <div
-                key={item.title}
-                className="relative overflow-hidden bg-surface/90 p-10 sm:p-12"
-              >
-                <p
-                  aria-hidden
-                  className="pointer-events-none absolute right-6 top-4 font-mono text-[5rem] font-medium leading-none text-ink/5 sm:text-[6rem]"
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <div className="relative">
-                  <div aria-hidden className="mb-5 h-px w-8 bg-primary" />
-                  <h4 className="text-[1.05rem] font-medium text-ink">{item.title}</h4>
-                  <p className="mt-4 text-sm leading-7 text-muted">{item.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Container>
+        </div>
+        {/* 写真の下：白背景エリア。sm以上はカード下半分のスペース + CTA */}
+        <div className="bg-white pb-10 sm:pb-14 sm:pt-40 lg:pt-44" />
       </section>
 
       {/* ─── 沿革 ─── */}
-      <section id="history" className="bg-ink py-24 text-white sm:py-28">
+      <section id="history" className="bg-white py-16 sm:py-24">
         <Container>
-          <div className="flex items-baseline justify-between gap-4 border-b border-white/15 pb-8">
-            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-white sm:text-[2.35rem]">
-              沿革
-            </h2>
-            <span className="shrink-0 text-[0.68rem] font-normal uppercase tracking-[0.26em] text-white/25">
-              History
-            </span>
-          </div>
-          <ol className="mt-2">
+          <h2 className="mb-8 text-[1.05rem] font-bold text-[#333333]">
+            沿革
+          </h2>
+          <dl>
             {HISTORY.map((h, i) => (
-              <li
+              <div
                 key={i}
-                className="grid grid-cols-[80px_1fr] gap-6 border-b border-white/10 py-7 last:border-0 sm:grid-cols-[120px_1fr] sm:gap-12"
+                className="grid border-b border-line py-4 first:border-t sm:grid-cols-[140px_1fr] sm:py-5"
               >
-                <span className="pt-0.5 font-mono text-sm font-normal text-white/35">
-                  {h.year}
-                </span>
-                <span className="text-[0.97rem] leading-7 text-white/75">{h.text}</span>
-              </li>
+                <dt className="mb-1 font-mono text-[0.8rem] text-muted sm:mb-0">{h.year}</dt>
+                <dd className="text-[1.05rem] leading-[2.1] text-[#333333]">{h.text}</dd>
+              </div>
             ))}
-          </ol>
+          </dl>
         </Container>
       </section>
     </>

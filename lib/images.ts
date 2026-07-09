@@ -6,7 +6,7 @@ const U = (id: string, w = 1600) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&q=70&auto=format&fit=crop`;
 
 export const IMG = {
-  heroCompany: U("1488229297570-58520851e868", 2000),
+  heroCompany: U("1522071820081-009f0129c71c", 2000),
   heroProduct: U("1518770660439-4636190af475", 2000),
   heroRecruit: U("1531973576160-7125cd663d86", 2000),
 

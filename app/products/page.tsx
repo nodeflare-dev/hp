@@ -19,7 +19,7 @@ export default function ProductsPage() {
     <>
       {/* ─── HERO ─── */}
       <section className="bg-ink text-white">
-        <Container className="pb-20 pt-10 sm:pb-24 sm:pt-12">
+        <Container className="pb-20 pt-3 sm:pb-24 sm:pt-4">
           <Breadcrumbs items={[{ label: "プロダクト", href: "/products" }]} />
           <div className="mt-14">
             <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-white/40">

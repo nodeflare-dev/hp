@@ -37,13 +37,13 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
               ) : (
                 <Link
                   href={c.href}
-                  className="transition-colors hover:text-primary"
+                  className="text-primary transition-colors hover:text-primary/70"
                 >
                   {c.label}
                 </Link>
               )}
               {!last && (
-                <span aria-hidden="true" className="text-line">
+                <span aria-hidden="true" className="text-ink">
                   /
                 </span>
               )}

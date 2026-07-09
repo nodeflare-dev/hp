@@ -61,7 +61,7 @@ export default function NodeFlareProductPage() {
 
       {/* ─── HERO ─── */}
       <section className="bg-ink text-white">
-        <Container className="pb-20 pt-10 sm:pb-24 sm:pt-12">
+        <Container className="pb-20 pt-3 sm:pb-24 sm:pt-4">
           <Breadcrumbs
             items={[
               { label: "プロダクト", href: "/products" },

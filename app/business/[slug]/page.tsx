@@ -77,7 +77,7 @@ export default async function BusinessDetailPage({
             <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/75 to-ink/40" />
           </div>
         )}
-        <Container className="relative pb-20 pt-10 sm:pb-24 sm:pt-12">
+        <Container className="relative pb-20 pt-3 sm:pb-24 sm:pt-4">
           <Breadcrumbs
             items={[
               { label: "事業内容", href: "/business" },

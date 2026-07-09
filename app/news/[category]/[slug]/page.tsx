@@ -85,7 +85,7 @@ export default async function ArticlePage({
       <article>
         {/* 記事ヘッダー */}
         <header className="border-b border-line bg-surface">
-          <Container size="narrow" className="py-14 sm:py-16">
+          <Container size="narrow" className="pb-14 pt-3 sm:pb-16 sm:pt-4">
             <Breadcrumbs
               items={[
                 { label: "お知らせ", href: "/news" },

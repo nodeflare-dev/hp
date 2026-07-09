@@ -25,7 +25,7 @@ export default function ContactPage() {
     <>
       {/* ─── HERO ─── */}
       <section className="bg-[#DCDCDC]">
-        <Container className="py-20 sm:py-24">
+        <Container className="pb-20 pt-3 sm:pb-24 sm:pt-4">
           <Breadcrumbs items={[{ label: "お問い合わせ", href: "/contact" }]} />
           <div className="mt-10">
             <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-ink/40">

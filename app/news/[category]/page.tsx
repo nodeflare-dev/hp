@@ -51,7 +51,7 @@ export default async function NewsCategoryPage({
     <>
       {/* ─── HERO ─── */}
       <section className="bg-[#DCDCDC]">
-        <Container className="pb-14 pt-10 sm:pb-16 sm:pt-12">
+        <Container className="pb-14 pt-3 sm:pb-16 sm:pt-4">
           <Breadcrumbs
             items={[
               { label: "お知らせ", href: "/news" },

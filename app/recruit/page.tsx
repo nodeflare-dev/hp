@@ -29,7 +29,7 @@ export default function RecruitPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/60 to-ink/90" />
         </div>
-        <Container className="relative pb-24 pt-10 sm:pb-28 sm:pt-12">
+        <Container className="relative pb-24 pt-3 sm:pb-28 sm:pt-4">
           <Breadcrumbs items={[{ label: "採用情報", href: "/recruit" }]} />
           <div className="mt-16 max-w-2xl sm:mt-20">
             <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-white/40">
