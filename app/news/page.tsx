@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Container } from "@/components/ui/Container";
-import { Section } from "@/components/ui/Section";
-import { NewsList } from "@/components/news/NewsList";
-import { CategoryTabs } from "@/components/news/CategoryTabs";
+import { NewsFilter } from "@/components/news/NewsFilter";
 import { JsonLd } from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
 import { getPosts } from "@/lib/news";
@@ -32,30 +30,17 @@ export default async function NewsPage() {
         }}
       />
 
-      {/* ─── HERO ─── */}
-      <section className="bg-[#DCDCDC]">
-        <Container className="pb-14 pt-3 sm:pb-16 sm:pt-4">
+      <div className="bg-surface">
+        <Container className="py-4">
           <Breadcrumbs items={[{ label: "お知らせ", href: "/news" }]} />
-          <div className="mt-10">
-            <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-ink/40">
-              News
-            </p>
-            <h1 className="mt-3 text-[1.65rem] font-bold tracking-tight text-[#333333] sm:text-[2rem]">
-              お知らせ
-            </h1>
-            <p className="mt-5 text-[1rem] leading-8 text-ink/60">
-              プレスリリースや技術情報など、NodeFlare からの最新情報をお届けします。
-            </p>
-          </div>
+        </Container>
+      </div>
+
+      <section className="bg-surface pb-24 pt-6 sm:pb-28 lg:pb-36">
+        <Container>
+          <NewsFilter posts={posts} activeCategory="" />
         </Container>
       </section>
-
-      <Section background="surface">
-        <CategoryTabs active="" />
-        <div className="mt-10">
-          <NewsList posts={posts} />
-        </div>
-      </Section>
     </>
   );
 }

@@ -21,7 +21,7 @@ export function CategoryTabs({ active }: { active: string }) {
             key={t.href}
             href={t.href}
             aria-current={isActive ? "page" : undefined}
-            className={`relative -mb-px border-b-2 pb-4 text-sm font-normal transition-colors ${
+            className={`relative -mb-px border-b-2 pb-4 text-sm font-medium transition-colors ${
               isActive
                 ? "border-primary text-ink"
                 : "border-transparent text-muted hover:text-ink"

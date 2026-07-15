@@ -84,7 +84,7 @@ export default async function ArticlePage({
 
       <article>
         {/* 記事ヘッダー */}
-        <header className="border-b border-line bg-surface">
+        <header>
           <Container size="narrow" className="pb-14 pt-3 sm:pb-16 sm:pt-4">
             <Breadcrumbs
               items={[
@@ -122,26 +122,15 @@ export default async function ArticlePage({
               {post.title}
             </h1>
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <div className="flex items-center gap-2.5">
-                <span
-                  aria-hidden
-                  className="grid h-8 w-8 place-items-center rounded-full border border-line bg-background text-sm font-normal text-ink"
-                >
-                  {post.author.slice(0, 1)}
-                </span>
-                <span className="text-sm text-ink/80">{post.author}</span>
-              </div>
-              {post.tags.length > 0 && (
-                <ul className="flex flex-wrap gap-2">
-                  {post.tags.map((t) => (
-                    <li key={t}>
-                      <Tag variant="outline">#{t}</Tag>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+            {post.tags.length > 0 && (
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {post.tags.map((t) => (
+                  <li key={t}>
+                    <Tag variant="outline">#{t}</Tag>
+                  </li>
+                ))}
+              </ul>
+            )}
           </Container>
         </header>
 
