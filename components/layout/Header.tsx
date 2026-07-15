@@ -191,24 +191,53 @@ export function Header() {
 
                 {/* 子項目グリッド */}
                 <ul className="grid grid-cols-2 xl:grid-cols-3">
-                  {activeItem.children.map((c) => (
-                    <li key={c.href}>
-                      <Link
-                        href={c.href}
-                        className="group flex w-full items-center justify-between py-4 pr-3 transition-colors hover:text-primary"
-                      >
+                  {activeItem.children.map((c) => {
+                    const isExternal = c.href.startsWith("http");
+                    const inner = (
+                      <>
                         <span className="text-[0.9rem] font-normal text-[#323232] transition-colors group-hover:text-primary">
                           {c.label}
                         </span>
-                        <svg
-                          width="8" height="14" viewBox="0 0 8 14" fill="none"
-                          aria-hidden className="ml-2 shrink-0 text-[#323232] transition-colors group-hover:text-primary"
-                        >
-                          <path d="M1 1l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </Link>
-                    </li>
-                  ))}
+                        {isExternal ? (
+                          <svg
+                            width="13" height="13" viewBox="0 0 13 13" fill="none"
+                            aria-hidden className="ml-2 shrink-0 text-[#323232] transition-colors group-hover:text-primary"
+                          >
+                            <path d="M5 2H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                            <path d="M8 1h4m0 0v4m0-4L6 7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        ) : (
+                          <svg
+                            width="6" height="10" viewBox="0 0 8 14" fill="none"
+                            aria-hidden className="ml-1 shrink-0 text-[#323232] transition-colors group-hover:text-primary"
+                          >
+                            <path d="M1 1l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </>
+                    );
+                    return (
+                      <li key={c.href}>
+                        {isExternal ? (
+                          <a
+                            href={c.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group inline-flex items-center gap-1.5 py-4 pr-3 transition-colors hover:text-primary"
+                          >
+                            {inner}
+                          </a>
+                        ) : (
+                          <Link
+                            href={c.href}
+                            className="group inline-flex items-center gap-1.5 py-4 pr-3 transition-colors hover:text-primary"
+                          >
+                            {inner}
+                          </Link>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>

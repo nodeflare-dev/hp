@@ -93,7 +93,7 @@ export const MEGA_MENU: MegaItem[] = [
     href: "/products",
     lead: "AI エージェント時代のバックエンドを支える、MCP ホスティングプラットフォーム。",
     children: [
-      { label: "NodeFlare", href: "/products/nodeflare", desc: "MCP ホスティングプラットフォーム" },
+      { label: "NodeFlare", href: "https://nodeflare.tech", desc: "MCP ホスティングプラットフォーム" },
     ],
   },
   {
@@ -262,6 +262,11 @@ export const TECH_DETAILS: TechDetail[] = [
     name: "Performance Optimization",
     description:
       "Core Web Vitals を指標に、フロントエンドからインフラまで横断的に計測・改善を行います。",
+  },
+  {
+    name: "TypeScript",
+    description:
+      "静的型付けによりバグを早期発見し、大規模コードベースでも安全かつ高速に開発を進めます。",
   },
 ];
 

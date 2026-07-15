@@ -25,7 +25,7 @@ export default function ProductsPage() {
             <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-white/40">
               Product
             </p>
-            <h1 className="mt-3 text-[3rem] font-medium leading-[1.05] tracking-[-0.03em] text-white sm:text-[4rem]">
+            <h1 className="mt-3 text-[1.65rem] font-bold tracking-tight text-white sm:text-[2rem]">
               プロダクト
             </h1>
             <p className="mt-6 max-w-lg text-[1rem] leading-8 text-white/60">

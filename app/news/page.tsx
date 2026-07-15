@@ -40,7 +40,7 @@ export default async function NewsPage() {
             <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-ink/40">
               News
             </p>
-            <h1 className="mt-3 text-[3rem] font-medium leading-[1.05] tracking-[-0.03em] text-ink sm:text-[4rem]">
+            <h1 className="mt-3 text-[1.65rem] font-bold tracking-tight text-[#333333] sm:text-[2rem]">
               お知らせ
             </h1>
             <p className="mt-5 text-[1rem] leading-8 text-ink/60">
