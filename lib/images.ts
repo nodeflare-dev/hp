@@ -30,4 +30,10 @@ export const IMG = {
 
   // 提供内容セクション背景（紫系）
   featBg: U("1519389950473-47ba0277781c", 2000),
+
+  // 採用ポジション（人物入りエンジニア写真）
+  recruitBackend: U("1629904853893-c2c8981a1dc5", 800),
+  recruitWasm: U("1549692520-acc6669e2f0c", 800),
+  recruitSecurity: U("1620825937374-87fc7d6bddc2", 800),
+  recruitPerf: U("1581091226825-a6a2a5aee158", 800),
 } as const;

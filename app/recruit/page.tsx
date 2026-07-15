@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Container } from "@/components/ui/Container";
 import { Placeholder } from "@/components/ui/Placeholder";
 import { Button } from "@/components/ui/Button";
-import { Tag } from "@/components/ui/Tag";
 import { buildMetadata } from "@/lib/seo";
 import { RECRUIT } from "@/lib/site";
 import { IMG } from "@/lib/images";
@@ -19,110 +20,91 @@ export const metadata: Metadata = buildMetadata({
 export default function RecruitPage() {
   return (
     <>
-      {/* ─── HERO ─── */}
-      <section className="relative overflow-hidden bg-ink text-white">
-        <div aria-hidden className="absolute inset-0">
-          <img
-            src={IMG.heroRecruit}
-            alt=""
-            className="h-full w-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/60 to-ink/90" />
-        </div>
-        <Container className="relative pb-24 pt-3 sm:pb-28 sm:pt-4">
+      {/* ─── ページタイトル ─── */}
+      <section className="border-b border-line bg-white pb-12 pt-3 sm:pb-16 sm:pt-4">
+        <Container>
           <Breadcrumbs items={[{ label: "採用情報", href: "/recruit" }]} />
-          <div className="mt-16 max-w-2xl sm:mt-20">
-            <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-white/40">
-              Recruit
-            </p>
-            <h1 className="mt-3 text-[1.65rem] font-bold tracking-tight text-white sm:text-[2rem]">
-              採用情報
-            </h1>
-            <div aria-hidden className="my-8 h-px w-12 bg-primary" />
-            <p className="text-[1rem] leading-8 text-white/65">{RECRUIT.intro}</p>
-          </div>
+          <h1 className="mt-6 text-[1.65rem] font-bold tracking-tight text-[#333333] sm:text-[2rem]">
+            採用情報
+          </h1>
+          <p className="mt-3 text-[1.05rem] leading-8 text-[#333333]">
+            {RECRUIT.intro}
+          </p>
         </Container>
       </section>
 
       {/* ─── 募集職種 ─── */}
-      <section id="positions" className="bg-surface py-24 sm:py-28">
+      <section id="positions" className="bg-surface py-16 sm:py-20">
         <Container>
-          <div className="flex items-baseline justify-between gap-4 border-b border-line pb-8">
-            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-ink sm:text-[2.35rem]">
-              募集職種
-            </h2>
-            <span className="shrink-0 text-[0.68rem] font-normal uppercase tracking-[0.26em] text-muted">
-              Positions
-            </span>
-          </div>
-          <div className="mt-2 divide-y divide-line">
-            {RECRUIT.positions.map((p, i) => (
-              <div key={p.title} className="py-10">
-                <div className="grid gap-6 sm:grid-cols-[1fr_auto] sm:items-start sm:gap-10">
-                  <div>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="font-mono text-[0.62rem] font-normal text-muted">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <Tag variant="primary">{p.type}</Tag>
-                    </div>
-                    <h3 className="mt-4 text-[1.15rem] font-medium text-ink">
-                      {p.title}
-                    </h3>
-                    <p className="mt-4 text-[0.92rem] leading-7 text-muted">
-                      {p.description}
-                    </p>
-                  </div>
-                  <Button href="/contact" variant="outline" className="shrink-0 self-start">
-                    応募・相談する
-                  </Button>
+          <h2 className="mb-10 text-[1.05rem] font-bold text-[#333333]">
+            募集職種
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {RECRUIT.positions.map((p, i) => {
+              const imgs = [IMG.recruitBackend, IMG.recruitWasm, IMG.recruitSecurity, IMG.recruitPerf];
+              return (
+              <div key={p.title} className="flex flex-col border border-line bg-white">
+                {/* 上部画像 */}
+                <img src={imgs[i]} alt="" className="aspect-[4/3] w-full object-cover" />
+
+                {/* カード本文 */}
+                <div className="flex flex-1 flex-col px-4 py-4">
+                  <p className="text-[0.7rem] text-muted">{p.type}</p>
+                  <h3 className="mt-1.5 text-[0.88rem] font-bold leading-5 text-[#333333]">
+                    {p.title}
+                  </h3>
+                  <dl className="mt-3 grid grid-cols-[4.5rem_1fr] gap-y-1 text-[0.72rem]">
+                    <dt className="text-muted">雇用形態</dt>
+                    <dd className="text-[#333333]">{p.type}</dd>
+                    <dt className="text-muted">勤務地</dt>
+                    <dd className="text-[#333333]">フルリモート</dd>
+                  </dl>
                 </div>
+
+                {/* 下部ボタンバー */}
+                <Link
+                  href="/contact"
+                  className="group flex items-center justify-between bg-ink px-4 py-3 text-[0.75rem] tracking-wide text-white transition-colors hover:bg-primary"
+                >
+                  詳細・応募する
+                  <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                </Link>
               </div>
-            ))}
+              );
+            })}
           </div>
         </Container>
       </section>
 
       {/* ─── 働く環境 ─── */}
-      <section id="environment" className="bg-ink py-24 text-white sm:py-28">
+      <section id="environment" className="bg-white py-16 sm:py-20">
         <Container>
-          <div className="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
-            <div>
-              <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-white/40">
-                Environment
-              </p>
-              <h2 className="mt-4 text-[1.9rem] font-medium tracking-[-0.02em] text-white sm:text-[2.35rem]">
-                {RECRUIT.environment.heading}
-              </h2>
-              <div aria-hidden className="my-7 h-px w-10 bg-primary" />
-              <p className="text-[0.97rem] leading-9 text-white/70">
-                {RECRUIT.environment.body}
-              </p>
-            </div>
-            <Placeholder ratio="4/3" tone="dark" />
+          <h2 className="mb-8 text-[1.05rem] font-bold text-[#333333]">
+            働く環境
+          </h2>
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <Placeholder ratio="4/3" tone="light" />
+            <p className="text-[1.05rem] leading-[2.1] text-[#333333]">
+              {RECRUIT.environment.body}
+            </p>
           </div>
         </Container>
       </section>
 
       {/* ─── 福利厚生 ─── */}
-      <section id="benefits" className="bg-background py-24 sm:py-28">
+      <section id="benefits" className="bg-surface py-16 sm:py-20">
         <Container>
-          <div className="flex items-baseline justify-between gap-4 border-b border-line pb-8">
-            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-ink sm:text-[2.35rem]">
-              福利厚生
-            </h2>
-            <span className="shrink-0 text-[0.68rem] font-normal uppercase tracking-[0.26em] text-muted">
-              Benefits
-            </span>
-          </div>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+          <h2 className="mb-8 text-[1.05rem] font-bold text-[#333333]">
+            福利厚生
+          </h2>
+          <ul className="grid gap-px sm:grid-cols-2">
             {RECRUIT.benefits.map((b) => (
               <li
                 key={b}
-                className="flex items-start gap-5 border-b border-line pb-6 pt-2"
+                className="flex items-start gap-5 border-b border-line pb-6 pt-4 first:border-t"
               >
                 <span aria-hidden className="mt-[0.45em] h-px w-6 shrink-0 bg-primary" />
-                <span className="text-[0.95rem] leading-7 text-ink/80">{b}</span>
+                <span className="text-[0.95rem] leading-7 text-[#333333]">{b}</span>
               </li>
             ))}
           </ul>
@@ -130,21 +112,16 @@ export default function RecruitPage() {
       </section>
 
       {/* ─── 開発環境 ─── */}
-      <section id="dev-environment" className="bg-[#DCDCDC] py-24 sm:py-28">
+      <section id="dev-environment" className="bg-white py-16 sm:py-20">
         <Container>
-          <div className="flex items-baseline justify-between gap-4 border-b border-ink/15 pb-8">
-            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-ink sm:text-[2.35rem]">
-              開発環境
-            </h2>
-            <span className="shrink-0 text-[0.68rem] font-normal uppercase tracking-[0.26em] text-ink/35">
-              Development
-            </span>
-          </div>
-          <ul className="mt-6 grid gap-px sm:grid-cols-2">
+          <h2 className="mb-8 text-[1.05rem] font-bold text-[#333333]">
+            開発環境
+          </h2>
+          <ul className="grid gap-px sm:grid-cols-2">
             {RECRUIT.devEnvironment.map((d) => (
               <li
                 key={d}
-                className="bg-surface/80 px-8 py-6 font-mono text-[0.85rem] text-ink/70"
+                className="bg-surface px-8 py-6 font-mono text-[0.85rem] text-[#333333]/70"
               >
                 {d}
               </li>
@@ -154,17 +131,17 @@ export default function RecruitPage() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="bg-ink py-24 text-white sm:py-28">
+      <section className="border-t border-line bg-white py-16 sm:py-20">
         <Container size="narrow">
           <div className="text-center">
-            <h2 className="text-[2.5rem] font-medium tracking-[-0.02em] text-white sm:text-[3rem]">
+            <h2 className="text-[1.65rem] font-bold tracking-tight text-[#333333] sm:text-[2rem]">
               話を聞いてみませんか？
             </h2>
-            <p className="mx-auto mt-6 max-w-md text-[0.97rem] leading-8 text-white/65">
+            <p className="mx-auto mt-4 max-w-md text-[1.05rem] leading-8 text-[#333333]">
               カジュアル面談も歓迎しています。まずはお気軽にお問い合わせください。
             </p>
-            <div className="mt-10 flex justify-center">
-              <Button href="/contact" variant="invert" withArrow>
+            <div className="mt-8 flex justify-center">
+              <Button href="/contact" withArrow>
                 エントリー・お問い合わせ
               </Button>
             </div>
