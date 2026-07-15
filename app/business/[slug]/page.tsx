@@ -4,18 +4,26 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Container } from "@/components/ui/Container";
-import { Placeholder } from "@/components/ui/Placeholder";
 import { Button } from "@/components/ui/Button";
 import { JsonLd } from "@/components/JsonLd";
 import { buildMetadata } from "@/lib/seo";
 import { BUSINESSES, getBusiness, SITE } from "@/lib/site";
 import { IMG } from "@/lib/images";
 
+const FEAT_BG = IMG.featBg;
+
 const BIZ_IMAGES: Record<string, string> = {
-  nodeflare: IMG.bizNodeflare,
-  webassembly: IMG.bizWasm,
-  security: IMG.bizSecurity,
-  performance: IMG.bizPerformance,
+  nodeflare: "/nodeflare.png",
+  webassembly: "/wasm.png",
+  security: "/security.png",
+  performance: "/performance.png",
+};
+
+const OVERVIEW_IMAGES: Record<string, string> = {
+  security: "/security2.png",
+  webassembly: "/wasm2.png",
+  performance: "/performance2.png",
+  nodeflare: "/nodeflare2.png",
 };
 
 export function generateStaticParams() {
@@ -65,143 +73,126 @@ export default async function BusinessDetailPage({
     <>
       <JsonLd data={jsonLd} />
 
-      {/* ─── HERO ─── */}
-      <section className="relative overflow-hidden bg-ink text-white">
-        {img && (
-          <div aria-hidden className="absolute inset-0">
-            <img
-              src={img}
-              alt=""
-              className="h-full w-full object-cover opacity-25"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/75 to-ink/40" />
-          </div>
-        )}
-        <Container className="relative pb-20 pt-3 sm:pb-24 sm:pt-4">
+      {/* ─── HERO: タイトル ─── */}
+      <section className="bg-white pb-12 pt-3 sm:pb-16 sm:pt-4">
+        <Container>
           <Breadcrumbs
             items={[
               { label: "事業内容", href: "/business" },
               { label: business.title, href: `/business/${business.id}` },
             ]}
           />
-          <div className="mt-12 max-w-2xl">
-            <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-white/40">
-              {business.subtitle}
-            </p>
-            <h1 className="mt-4 text-[2.8rem] font-medium leading-[1.05] tracking-[-0.03em] text-white sm:text-[4rem]">
+          <div className="mt-10 max-w-3xl">
+            <h1 className="text-[1.2rem] font-bold leading-tight tracking-[-0.02em] text-[#333333] sm:text-[1.4rem]">
               {business.title}
             </h1>
-            <div aria-hidden className="my-8 h-px w-12 bg-primary" />
-            <p className="text-[1rem] leading-8 text-white/65">{business.summary}</p>
+            <p className="mt-3 text-[0.95rem] leading-[1.9] text-[#333333]">{business.summary}</p>
           </div>
         </Container>
       </section>
 
-      {/* ─── 概要 ─── */}
-      <section className="bg-surface py-24 sm:py-28">
+
+      {/* ─── サービス概要 ─── */}
+      <section className="bg-white pb-10 pt-0 sm:pb-14">
         <Container>
-          <div className="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-20">
-            <div>
-              <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-muted">
-                Overview
-              </p>
-              <h2 className="mt-4 text-[1.9rem] font-medium tracking-[-0.02em] text-ink sm:text-[2.35rem]">
-                サービス概要
-              </h2>
-              <div aria-hidden className="my-7 h-px w-10 bg-primary" />
-              <p className="text-[1rem] leading-9 text-muted">{business.description}</p>
+          {OVERVIEW_IMAGES[business.id] ? (
+            <div className="grid items-center gap-10 sm:grid-cols-2 lg:gap-16">
+              <div className="overflow-hidden">
+                <img
+                  src={OVERVIEW_IMAGES[business.id]}
+                  alt=""
+                  className="w-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="text-[1.45rem] leading-[2.2] text-[#333333]">{business.description}</p>
+              </div>
             </div>
-            <Placeholder ratio="4/3" tone="dark" />
-          </div>
+          ) : (
+            <p className="max-w-3xl text-[1.25rem] leading-[2.2] text-[#333333]">{business.description}</p>
+          )}
         </Container>
       </section>
 
       {/* ─── 提供内容 ─── */}
-      <section className="bg-ink py-24 text-white sm:py-28">
-        <Container>
-          <div className="flex items-baseline justify-between gap-4 border-b border-white/15 pb-8">
-            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-white sm:text-[2.35rem]">
-              提供内容
-            </h2>
-            <span className="shrink-0 text-[0.68rem] font-normal uppercase tracking-[0.26em] text-white/25">
-              Features
-            </span>
+      <div>
+        {/* 背景写真エリア（縦幅短め） */}
+        <div className="relative">
+          <div className="relative h-[300px] w-full overflow-hidden bg-cover bg-center sm:h-[360px]" style={{ backgroundImage: "url('/bg2.png')" }}>
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 pb-24 text-center sm:pb-32">
+              <h2 className="text-[1.6rem] font-bold tracking-[-0.02em] text-white sm:text-[2rem]">
+                What We Deliver
+              </h2>
+              <p className="max-w-6xl text-[1.3rem] font-bold leading-10 text-white">
+                {business.title}が生み出す成果を、具体的な数字でお伝えします。<br />
+                私たちは単なる技術提供にとどまらず、クライアントのビジネスに直接貢献する成果にコミットします。
+              </p>
+            </div>
           </div>
-          <ul className="mt-2">
-            {business.features.map((f, i) => (
-              <li
-                key={f}
-                className="flex items-start gap-8 border-b border-white/10 py-8 last:border-0"
-              >
-                <span className="shrink-0 pt-1 font-mono text-[0.62rem] font-normal text-white/30">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <p className="text-[1rem] leading-8 text-white/80">{f}</p>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-14">
-            <Button href="/contact" variant="invert" withArrow>
-              この事業について相談する
-            </Button>
+
+          {/* カード: 下端から半分はみ出し */}
+          <div className="sm:absolute sm:inset-x-0 sm:bottom-0 sm:translate-y-1/2">
+            <div className="mx-auto w-full max-w-7xl px-2 sm:px-4">
+              <ul className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+                {business.features.map((f) => (
+                  <li key={f.stat} className="rounded-xl border border-[#aaa] bg-[#f4f4f5] px-8 py-10">
+                    <p className="text-[2.2rem] font-bold leading-none text-[#333333]">{f.stat}</p>
+                    <p className="mt-4 text-[1.1rem] font-medium leading-7 text-[#333333]">{f.label}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </Container>
-      </section>
+        </div>
+
+        {/* カードの下半分分の余白 + CTA */}
+        <div className="bg-surface pb-20 sm:pb-24 sm:pt-52">
+          <Container>
+            <div className="mt-6 sm:mt-0">
+              <Button href="/contact" withArrow>
+                この事業について相談する
+              </Button>
+            </div>
+          </Container>
+        </div>
+      </div>
 
       {/* ─── 他事業 ─── */}
-      <section className="bg-background py-24 sm:py-28">
+      <section className="bg-white py-24 sm:py-32">
         <Container>
           <div className="flex items-baseline justify-between gap-4">
-            <h2 className="text-[1.9rem] font-medium tracking-[-0.02em] text-ink sm:text-[2.35rem]">
+            <h2 className="text-[1.6rem] font-bold tracking-[-0.02em] text-[#333333] sm:text-[2rem]">
               その他の事業
             </h2>
             <Link
               href="/business"
-              className="group shrink-0 inline-flex items-center gap-2 text-sm font-normal text-ink"
+              className="group shrink-0 inline-flex items-center gap-2 text-sm font-normal text-[#333333]"
             >
               一覧を見る
-              <span
-                aria-hidden
-                className="text-muted transition-transform duration-300 group-hover:translate-x-1"
-              >
-                →
-              </span>
+              <span aria-hidden className="text-muted transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
           </div>
-          <div className="mt-10 grid gap-px sm:grid-cols-3">
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
             {others.map((b) => {
               const bImg = BIZ_IMAGES[b.id];
               return (
                 <Link
                   key={b.id}
                   href={`/business/${b.id}`}
-                  className="group block overflow-hidden bg-surface"
+                  className="group block"
                 >
-                  <div className="overflow-hidden">
-                    <div className="transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]">
-                      {bImg ? (
-                        <div className="aspect-[16/9]">
-                          <img
-                            src={bImg}
-                            alt=""
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <Placeholder ratio="16/9" tone="dark" />
-                      )}
+                  {bImg && (
+                    <div className="aspect-[16/9] overflow-hidden">
+                      <img
+                        src={bImg}
+                        alt=""
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
                     </div>
-                  </div>
-                  <div className="p-6">
-                    <p className="text-[0.62rem] font-normal uppercase tracking-[0.18em] text-muted">
-                      {b.subtitle}
-                    </p>
-                    <h3 className="mt-2 text-[1.05rem] font-medium text-ink transition-colors group-hover:text-primary">
-                      {b.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 text-[0.85rem] leading-6 text-muted">
-                      {b.summary}
-                    </p>
+                  )}
+                  <div className="mt-4">
+                    <h3 className="text-[1.05rem] font-bold text-[#333333]">{b.title}</h3>
+                    <p className="mt-2 text-[0.9rem] leading-7 text-muted">{b.subtitle}</p>
                   </div>
                 </Link>
               );

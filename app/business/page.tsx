@@ -75,17 +75,17 @@ export default function BusinessPage() {
 
                     {/* テキスト */}
                     <div
-                      className={`flex flex-col justify-center bg-ink px-8 py-8 ${
+                      className={`flex flex-col justify-center bg-white px-8 py-8 ${
                         even ? "lg:pl-12 lg:pr-8" : "lg:order-1 lg:pl-8 lg:pr-12"
                       }`}
                     >
-                      <span className="text-[0.62rem] font-normal uppercase tracking-[0.2em] text-white/40">
+                      <span className="text-[0.62rem] font-normal uppercase tracking-[0.2em] text-[#333333]/40">
                         {b.subtitle}
                       </span>
-                      <h2 className="mt-4 text-[1.1rem] font-bold tracking-[-0.02em] text-white sm:text-[1.3rem]">
+                      <h2 className="mt-4 text-[1.1rem] font-bold tracking-[-0.02em] text-[#333333] sm:text-[1.3rem]">
                         {b.title}
                       </h2>
-                      <p className="mt-5 text-[1.1rem] leading-[2.0] text-white">{b.summary}</p>
+                      <p className="mt-5 text-[1.1rem] leading-[2.0] text-[#333333]">{b.summary}</p>
                     </div>
                   </div>
                 </div>
