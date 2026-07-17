@@ -1,18 +1,14 @@
 /**
  * お知らせ（News）— Hygraph 連携レイヤー。
  *
- * Hygraph の環境変数が未設定でもサイトが完全に動作するよう、
- * 未設定時は下部のサンプルデータ（FALLBACK_POSTS）を返すフォールバック設計。
- * 環境変数を設定すると自動的に Hygraph から取得する。
- *
  * 必要な環境変数・スキーマは HYGRAPH.md を参照。
  */
 
 export const NEWS_CATEGORIES = [
-  { slug: "news", label: "お知らせ", hygraph: "News" },
-  { slug: "webassembly", label: "WebAssembly", hygraph: "WebAssembly" },
-  { slug: "security", label: "Security", hygraph: "Security" },
-  { slug: "performance", label: "Performance", hygraph: "Performance" },
+  { slug: "news", label: "お知らせ", hygraph: "news" },
+  { slug: "webassembly", label: "WebAssembly", hygraph: "webassembly" },
+  { slug: "security", label: "Security", hygraph: "security" },
+  { slug: "performance", label: "Performance", hygraph: "performance" },
 ] as const;
 
 export type CategorySlug = (typeof NEWS_CATEGORIES)[number]["slug"];
@@ -21,7 +17,7 @@ export function getCategory(slug: string) {
   return NEWS_CATEGORIES.find((c) => c.slug === slug);
 }
 
-/** Hygraph の category 値（"News" 等）→ サイト内 slug */
+/** Hygraph の category 値（"NEWS" 等）→ サイト内 slug */
 export function categorySlugFromHygraph(value: string): CategorySlug {
   const found = NEWS_CATEGORIES.find(
     (c) => c.hygraph.toLowerCase() === value.toLowerCase(),
@@ -33,11 +29,9 @@ export type Post = {
   slug: string;
   title: string;
   excerpt: string;
-  /** HTML 文字列（Hygraph の RichText.html を想定） */
   contentHtml: string;
   category: CategorySlug;
   tags: string[];
-  author: string;
   publishedAt: string; // ISO
   updatedAt: string; // ISO
   coverImageUrl?: string;
@@ -46,7 +40,6 @@ export type Post = {
 const ENDPOINT = process.env.HYGRAPH_ENDPOINT;
 const TOKEN = process.env.HYGRAPH_TOKEN;
 
-// お知らせは更新頻度が低いため ISR（1時間）でキャッシュ。
 const REVALIDATE_SECONDS = 3600;
 
 type HygraphPost = {
@@ -56,10 +49,8 @@ type HygraphPost = {
   content?: { html?: string | null } | null;
   category?: string | null;
   tags?: string[] | null;
-  author?: string | null;
-  publishedAt?: string | null;
+  postDate?: string | null;
   updatedAt?: string | null;
-  coverImage?: { url?: string | null } | null;
 };
 
 function mapPost(p: HygraphPost): Post {
@@ -68,12 +59,10 @@ function mapPost(p: HygraphPost): Post {
     title: p.title,
     excerpt: p.excerpt ?? "",
     contentHtml: p.content?.html ?? "",
-    category: categorySlugFromHygraph(p.category ?? "News"),
+    category: categorySlugFromHygraph(p.category ?? "NEWS"),
     tags: p.tags ?? [],
-    author: p.author ?? "NodeFlare 編集部",
-    publishedAt: p.publishedAt ?? new Date(0).toISOString(),
-    updatedAt: p.updatedAt ?? p.publishedAt ?? new Date(0).toISOString(),
-    coverImageUrl: p.coverImage?.url ?? undefined,
+    publishedAt: p.postDate ?? new Date(0).toISOString(),
+    updatedAt: p.updatedAt ?? p.postDate ?? new Date(0).toISOString(),
   };
 }
 
@@ -115,23 +104,20 @@ const POST_FIELDS = `
   content { html }
   category
   tags
-  author
-  publishedAt
+  postDate
   updatedAt
-  coverImage { url }
 `;
 
 /** 全お知らせを公開日の新しい順で取得。limit で件数制限。 */
 export async function getPosts(limit?: number): Promise<Post[]> {
   const data = await hygraphFetch<{ posts: HygraphPost[] }>(
     `query Posts($first: Int) {
-      posts(orderBy: publishedAt_DESC, first: $first) { ${POST_FIELDS} }
+      posts(orderBy: postDate_DESC, first: $first) { ${POST_FIELDS} }
     }`,
     { first: limit ?? 100 },
   );
 
-  const posts = data?.posts?.map(mapPost) ?? [...FALLBACK_POSTS];
-  posts.sort(
+  const posts = (data?.posts?.map(mapPost) ?? []).sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
@@ -147,19 +133,17 @@ export async function getPostsByCategory(
   if (!category) return [];
 
   const data = await hygraphFetch<{ posts: HygraphPost[] }>(
-    `query PostsByCategory($category: String!, $first: Int) {
-      posts(where: { category: $category }, orderBy: publishedAt_DESC, first: $first) {
+    `query PostsByCategory($category: Category!, $first: Int) {
+      posts(where: { category: $category }, orderBy: postDate_DESC, first: $first) {
         ${POST_FIELDS}
       }
     }`,
     { category: category.hygraph, first: limit ?? 100 },
   );
 
-  let posts =
-    data?.posts?.map(mapPost) ??
-    FALLBACK_POSTS.filter((p) => p.category === slug);
-
-  posts = posts.filter((p) => p.category === slug);
+  let posts = (data?.posts?.map(mapPost) ?? []).filter(
+    (p) => p.category === slug,
+  );
   posts.sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
@@ -176,8 +160,7 @@ export async function getPost(slug: string): Promise<Post | null> {
     { slug },
   );
 
-  if (data) return data.post ? mapPost(data.post) : null;
-  return FALLBACK_POSTS.find((p) => p.slug === slug) ?? null;
+  return data?.post ? mapPost(data.post) : null;
 }
 
 /** 全スラッグ（generateStaticParams 用）。 */
@@ -187,87 +170,3 @@ export async function getAllPostSlugs(): Promise<
   const posts = await getPosts();
   return posts.map((p) => ({ category: p.category, slug: p.slug }));
 }
-
-/* ------------------------------------------------------------------ *
- * フォールバック用サンプルデータ（Hygraph 未設定時のみ使用）
- * ------------------------------------------------------------------ */
-const FALLBACK_POSTS: Post[] = [
-  {
-    slug: "nodeflare-launch",
-    title: "MCP ホスティングプラットフォーム「NodeFlare」を提供開始しました",
-    excerpt:
-      "AI エージェント時代のバックエンド基盤として、MCP サーバーを本番品質で運用できるプラットフォーム「NodeFlare」の提供を開始しました。",
-    contentHtml:
-      "<p>この度、MCP（Model Context Protocol）サーバーをスケーラブルかつ安全に運用できるマネージドホスティングプラットフォーム「NodeFlare」の提供を開始いたしました。</p><h2>NodeFlare とは</h2><p>デプロイ・スケーリング・監視・アクセス制御をワンストップで提供し、AI エージェント時代のバックエンドを支えます。</p>",
-    category: "news",
-    tags: ["プレスリリース", "NodeFlare", "MCP"],
-    author: "NodeFlare 編集部",
-    publishedAt: "2025-06-01T09:00:00.000Z",
-    updatedAt: "2025-06-01T09:00:00.000Z",
-  },
-  {
-    slug: "webassembly-edge-performance",
-    title: "エッジで動く WebAssembly のパフォーマンス最適化事例",
-    excerpt:
-      "Rust で実装した WebAssembly モジュールをエッジで動かし、レイテンシを大幅に削減した事例を紹介します。",
-    contentHtml:
-      "<p>本記事では、Rust による WebAssembly モジュールをエッジ環境で動作させ、体感速度を改善した取り組みを解説します。</p><h2>背景</h2><p>ネイティブに迫る実行速度と高い移植性の両立が鍵でした。</p>",
-    category: "webassembly",
-    tags: ["WebAssembly", "Rust", "Edge"],
-    author: "NodeFlare 編集部",
-    publishedAt: "2025-05-20T09:00:00.000Z",
-    updatedAt: "2025-05-22T09:00:00.000Z",
-  },
-  {
-    slug: "security-assessment-checklist",
-    title: "エンタープライズ向け脆弱性診断のチェックリスト",
-    excerpt:
-      "診断して終わりにしない。修正対応まで見据えた脆弱性診断の観点を整理しました。",
-    contentHtml:
-      "<p>脆弱性診断は「見つける」だけでなく「直し切る」ことが重要です。本記事では実務で用いている観点を共有します。</p><h2>主要な観点</h2><ul><li>認証・認可</li><li>入力値検証</li><li>依存ライブラリの管理</li></ul>",
-    category: "security",
-    tags: ["Security", "脆弱性診断"],
-    author: "NodeFlare 編集部",
-    publishedAt: "2025-05-10T09:00:00.000Z",
-    updatedAt: "2025-05-10T09:00:00.000Z",
-  },
-  {
-    slug: "core-web-vitals-nextjs",
-    title: "Next.js で Core Web Vitals を改善する実践ポイント",
-    excerpt:
-      "Server Components とキャッシュ戦略を軸に、Core Web Vitals を改善する実践的な手順をまとめました。",
-    contentHtml:
-      "<p>Core Web Vitals の改善は、計測から始まります。本記事では Next.js における実践的なアプローチを紹介します。</p><h2>計測</h2><p>まずは現状を数値で把握することが第一歩です。</p>",
-    category: "performance",
-    tags: ["Performance", "Next.js", "Core Web Vitals"],
-    author: "NodeFlare 編集部",
-    publishedAt: "2025-04-28T09:00:00.000Z",
-    updatedAt: "2025-04-28T09:00:00.000Z",
-  },
-  {
-    slug: "company-established",
-    title: "株式会社NodeFlare を設立しました",
-    excerpt:
-      "技術で社会の基盤をつくることを目指し、株式会社NodeFlare を設立しました。",
-    contentHtml:
-      "<p>この度、株式会社NodeFlare を設立いたしました。速く・安全で・信頼できるソフトウェア基盤の提供を通じて、社会に貢献してまいります。</p>",
-    category: "news",
-    tags: ["お知らせ", "会社設立"],
-    author: "NodeFlare 編集部",
-    publishedAt: "2024-11-01T09:00:00.000Z",
-    updatedAt: "2024-11-01T09:00:00.000Z",
-  },
-  {
-    slug: "wasm-rust-go-comparison",
-    title: "Rust と Go で書く WebAssembly：使い分けの指針",
-    excerpt:
-      "WebAssembly を Rust と Go のどちらで実装するか。実務での使い分けの指針を整理しました。",
-    contentHtml:
-      "<p>WebAssembly モジュールの実装言語選定について、実務での判断基準を紹介します。</p><h2>指針</h2><p>要件・チームの習熟度・バイナリサイズなどを総合的に判断します。</p>",
-    category: "webassembly",
-    tags: ["WebAssembly", "Rust", "Go"],
-    author: "NodeFlare 編集部",
-    publishedAt: "2025-03-15T09:00:00.000Z",
-    updatedAt: "2025-03-15T09:00:00.000Z",
-  },
-];
