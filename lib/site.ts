@@ -38,7 +38,6 @@ export const NAV: { label: string; href: string }[] = [
   { label: "HOME", href: "/" },
   { label: "企業情報", href: "/company" },
   { label: "事業内容", href: "/business" },
-  { label: "プロダクト", href: "/products" },
   { label: "技術", href: "/technology" },
   { label: "お知らせ", href: "/news" },
   { label: "採用情報", href: "/recruit" },
@@ -49,7 +48,6 @@ export const NAV: { label: string; href: string }[] = [
 export const FOOTER_LINKS: { label: string; href: string }[] = [
   { label: "企業情報", href: "/company" },
   { label: "事業内容", href: "/business" },
-  { label: "プロダクト", href: "/products" },
   { label: "採用", href: "/recruit" },
   { label: "お知らせ", href: "/news" },
   { label: "お問い合わせ", href: "/contact" },
@@ -62,6 +60,7 @@ export type MegaItem = {
   label: string;
   href: string;
   lead?: string;
+  noNav?: true;
   children?: { label: string; href: string; desc?: string }[];
 };
 
@@ -91,6 +90,7 @@ export const MEGA_MENU: MegaItem[] = [
   {
     label: "プロダクト",
     href: "/products",
+    noNav: true,
     lead: "AI エージェント時代のバックエンドを支える、MCP ホスティングプラットフォーム。",
     children: [
       { label: "NodeFlare", href: "https://nodeflare.tech", desc: "MCP ホスティングプラットフォーム" },
@@ -122,8 +122,6 @@ export const MEGA_MENU: MegaItem[] = [
     children: [
       { label: "募集職種", href: "/recruit#positions", desc: "現在募集中のポジション" },
       { label: "働く環境", href: "/recruit#environment", desc: "文化と働き方" },
-      { label: "福利厚生", href: "/recruit#benefits", desc: "制度・サポート" },
-      { label: "開発環境", href: "/recruit#dev-environment", desc: "技術スタック" },
     ],
   },
 ];
@@ -338,24 +336,36 @@ export const RECRUIT = {
     {
       title: "ソフトウェアエンジニア（バックエンド / プラットフォーム）",
       type: "正社員",
+      salary: "月給 40万円〜（経験・スキルに応じて応相談）",
+      hours: "10:00 〜 19:00（フレックスタイム制）",
+      stockOption: true,
       description:
         "MCP ホスティング「NodeFlare」の設計・開発・運用を担っていただきます。Rust / Go / TypeScript を用いた基盤開発が中心です。",
     },
     {
       title: "WebAssembly エンジニア",
       type: "正社員",
+      salary: "月給 40万円〜（経験・スキルに応じて応相談）",
+      hours: "10:00 〜 19:00（フレックスタイム制）",
+      stockOption: true,
       description:
         "Rust / Go を用いた WebAssembly ソリューションの設計・実装・最適化を担当していただきます。",
     },
     {
       title: "セキュリティエンジニア",
       type: "正社員 / 業務委託",
+      salary: "月給 40万円〜（経験・スキルに応じて応相談）",
+      hours: "10:00 〜 19:00（フレックスタイム制）",
+      stockOption: true,
       description:
         "脆弱性診断から修正対応、セキュリティ改善までを一貫して手がけていただきます。",
     },
     {
       title: "パフォーマンスエンジニア",
       type: "正社員 / 業務委託",
+      salary: "月給 40万円〜（経験・スキルに応じて応相談）",
+      hours: "10:00 〜 19:00（フレックスタイム制）",
+      stockOption: true,
       description:
         "Core Web Vitals を起点に、Next.js からインフラまで横断的な性能改善を担当していただきます。",
     },
@@ -364,17 +374,6 @@ export const RECRUIT = {
     heading: "働く環境",
     body: "リモートを前提とした柔軟な働き方。ドキュメントと一次情報を重んじる文化のもと、落ち着いて技術と向き合える環境を用意しています。",
   },
-  benefits: [
-    "フルリモート・フレックスタイム制",
-    "書籍・学習・カンファレンス参加支援",
-    "最新スペックの開発機材支給",
-    "各種社会保険完備",
-    "副業・技術発信の推奨",
-  ],
-  devEnvironment: [
-    "言語：Rust / Go / TypeScript",
-    "フロントエンド：Next.js（App Router）",
-    "インフラ：Cloudflare / AWS / Kubernetes / Docker",
-    "その他：WebAssembly / セキュリティ / パフォーマンス最適化",
-  ],
+  benefits: [],
+  devEnvironment: [],
 } as const;

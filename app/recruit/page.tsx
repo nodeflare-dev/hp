@@ -1,11 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Container } from "@/components/ui/Container";
 import { Placeholder } from "@/components/ui/Placeholder";
 import { Button } from "@/components/ui/Button";
+import { PositionCard } from "@/components/recruit/PositionCard";
 import { buildMetadata } from "@/lib/seo";
 import { RECRUIT } from "@/lib/site";
 import { IMG } from "@/lib/images";
@@ -39,37 +38,11 @@ export default function RecruitPage() {
           <h2 className="mb-10 text-[1.05rem] font-bold text-[#333333]">
             募集職種
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {RECRUIT.positions.map((p, i) => {
               const imgs = [IMG.recruitBackend, IMG.recruitWasm, IMG.recruitSecurity, IMG.recruitPerf];
               return (
-              <div key={p.title} className="flex flex-col border border-line bg-white">
-                {/* 上部画像 */}
-                <img src={imgs[i]} alt="" className="aspect-[4/3] w-full object-cover" />
-
-                {/* カード本文 */}
-                <div className="flex flex-1 flex-col px-4 py-4">
-                  <p className="text-[0.7rem] text-muted">{p.type}</p>
-                  <h3 className="mt-1.5 text-[0.88rem] font-bold leading-5 text-[#333333]">
-                    {p.title}
-                  </h3>
-                  <dl className="mt-3 grid grid-cols-[4.5rem_1fr] gap-y-1 text-[0.72rem]">
-                    <dt className="text-muted">雇用形態</dt>
-                    <dd className="text-[#333333]">{p.type}</dd>
-                    <dt className="text-muted">勤務地</dt>
-                    <dd className="text-[#333333]">フルリモート</dd>
-                  </dl>
-                </div>
-
-                {/* 下部ボタンバー */}
-                <Link
-                  href="/contact"
-                  className="group flex items-center justify-between bg-ink px-4 py-3 text-[0.75rem] tracking-wide text-white transition-colors hover:bg-primary"
-                >
-                  詳細・応募する
-                  <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </div>
+                <PositionCard key={p.title} position={p} img={imgs[i]} />
               );
             })}
           </div>
@@ -91,44 +64,6 @@ export default function RecruitPage() {
         </Container>
       </section>
 
-      {/* ─── 福利厚生 ─── */}
-      <section id="benefits" className="bg-surface py-16 sm:py-20">
-        <Container>
-          <h2 className="mb-8 text-[1.05rem] font-bold text-[#333333]">
-            福利厚生
-          </h2>
-          <ul className="grid gap-px sm:grid-cols-2">
-            {RECRUIT.benefits.map((b) => (
-              <li
-                key={b}
-                className="flex items-start gap-5 border-b border-line pb-6 pt-4 first:border-t"
-              >
-                <span aria-hidden className="mt-[0.45em] h-px w-6 shrink-0 bg-primary" />
-                <span className="text-[0.95rem] leading-7 text-[#333333]">{b}</span>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      {/* ─── 開発環境 ─── */}
-      <section id="dev-environment" className="bg-white py-16 sm:py-20">
-        <Container>
-          <h2 className="mb-8 text-[1.05rem] font-bold text-[#333333]">
-            開発環境
-          </h2>
-          <ul className="grid gap-px sm:grid-cols-2">
-            {RECRUIT.devEnvironment.map((d) => (
-              <li
-                key={d}
-                className="bg-surface px-8 py-6 font-mono text-[0.85rem] text-[#333333]/70"
-              >
-                {d}
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
 
       {/* ─── CTA ─── */}
       <section className="border-t border-line bg-white py-16 sm:py-20">

@@ -108,20 +108,37 @@ export function Header() {
                   className="flex items-stretch"
                   onMouseEnter={() => setActive(item.href)}
                 >
-                  <Link
-                    href={item.href}
-                    className="flex items-center gap-1.5 px-4 text-[0.92rem] font-normal tracking-wide text-[#323232] transition-colors hover:text-primary xl:px-5"
-                    onFocus={() => setActive(item.href)}
-                  >
-                    {item.label}
-                    <svg
-                      width="14" height="14" viewBox="0 0 10 10" fill="none"
-                      aria-hidden="true"
-                      className={`transition-transform duration-300 ${active === item.href ? "rotate-180" : ""}`}
+                  {item.noNav ? (
+                    <button
+                      type="button"
+                      className="flex items-center gap-1.5 px-4 text-[0.92rem] font-normal tracking-wide text-[#323232] transition-colors hover:text-primary-dark xl:px-5"
+                      onFocus={() => setActive(item.href)}
                     >
-                      <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </Link>
+                      {item.label}
+                      <svg
+                        width="14" height="14" viewBox="0 0 10 10" fill="none"
+                        aria-hidden="true"
+                        className={`transition-transform duration-300 ${active === item.href ? "rotate-180" : ""}`}
+                      >
+                        <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={`flex items-center gap-1.5 px-4 text-[0.92rem] font-normal tracking-wide transition-colors hover:text-primary-dark xl:px-5 ${isActive(item.href) ? "text-primary-dark" : "text-[#323232]"}`}
+                      onFocus={() => setActive(item.href)}
+                    >
+                      {item.label}
+                      <svg
+                        width="14" height="14" viewBox="0 0 10 10" fill="none"
+                        aria-hidden="true"
+                        className={`transition-transform duration-300 ${active === item.href ? "rotate-180" : ""}`}
+                      >
+                        <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -179,15 +196,23 @@ export function Header() {
               {/* 右：リンク一覧 */}
               <div className="flex-1 px-10 py-8">
                 {/* カテゴリ見出しリンク */}
-                <Link
-                  href={activeItem.href}
-                  className="group mb-5 inline-flex items-center gap-1.5 border-b border-line pb-4"
-                >
-                  <span className="text-[1rem] font-semibold text-[#323232] transition-colors group-hover:text-primary">
-                    {activeItem.label}
+                {activeItem.noNav ? (
+                  <span className="mb-5 inline-flex items-center gap-1.5 border-b border-line pb-4">
+                    <span className="text-[1rem] font-semibold text-[#323232]">
+                      {activeItem.label}
+                    </span>
                   </span>
-                  <span aria-hidden className="text-[#323232] transition-colors group-hover:text-primary">→</span>
-                </Link>
+                ) : (
+                  <Link
+                    href={activeItem.href}
+                    className="group mb-5 inline-flex items-center gap-1.5 border-b border-line pb-4"
+                  >
+                    <span className="text-[1rem] font-semibold text-[#323232] transition-colors group-hover:text-primary">
+                      {activeItem.label}
+                    </span>
+                    <span aria-hidden className="text-[#323232] transition-colors group-hover:text-primary">→</span>
+                  </Link>
+                )}
 
                 {/* 子項目グリッド */}
                 <ul className="grid grid-cols-2 xl:grid-cols-3">
@@ -257,7 +282,7 @@ export function Header() {
                   <Link
                     href={item.href}
                     className={`flex items-center justify-between border-b border-line/70 py-4 text-[0.95rem] font-normal ${
-                      isActive(item.href) ? "text-primary" : "text-[#323232]"
+                      isActive(item.href) ? "text-primary-dark" : "text-[#323232]"
                     }`}
                   >
                     {item.label}

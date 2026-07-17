@@ -42,19 +42,15 @@ export default function TechnologyPage() {
         className="relative text-white"
         style={{ backgroundImage: "url('/tech-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}
       >
+        <div className="absolute inset-0 bg-black/40" />
         <div className="relative">
           <Container className="pb-20 pt-3 sm:pb-24 sm:pt-4">
             <Breadcrumbs items={[{ label: "技術", href: "/technology" }]} light />
-            <div className="mt-14 max-w-2xl">
-              <p className="text-[0.7rem] font-normal uppercase tracking-[0.28em] text-white/40">
-                Technology
-              </p>
-              <h1 className="mt-3 text-[1.65rem] font-bold tracking-tight text-white sm:text-[2rem]">
-                技術
+            <div className="mt-14 w-full text-center">
+              <h1 className="text-[1.35rem] font-bold leading-[1.9] tracking-tight text-white sm:text-[1.6rem]">
+                私たちは、速さと安全性を妥協なく両立するために、<br />
+                Rust・Go・WebAssembly をはじめとした厳選された技術を活用しています。
               </h1>
-              <p className="mt-5 text-[1rem] leading-8 text-white">
-                信頼性とパフォーマンスを両立するために、私たちが保有・活用する技術をご紹介します。
-              </p>
             </div>
           </Container>
         </div>
